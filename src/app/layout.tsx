@@ -1,8 +1,21 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// prettier-ignore
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+// prettier-ignore
+import 'primereact/resources/primereact.min.css'
+// prettier-ignore
+import 'primeicons/primeicons.css'
+// prettier-ignore
+import 'primeflex/primeflex.css'
+// prettier-ignore
+import './globals.css'
+import { Providers } from "./(components)/Providers";
+import { BreadCrumbs } from "./(components)/breadcrumbs";
+import { DashboardMenu } from "./(components)/menu";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-family" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +28,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.variable}>
+        <Providers>
+          <div className="flex min-h-screen flex-column">
+            <div className="surface-ground">
+              <DashboardMenu />
+            </div>
+
+            <main className="flex-grow-1">
+              <div className="border-bottom-1 border-top-1 surface-border">
+                <BreadCrumbs />
+              </div>
+              <div className="p-3 h-full surface-ground">
+                <div className="flex flex-auto mx-auto flex-column max-w-80rem">
+                  <div className="flex-auto px-2 w-full pb-4 md:px-4 surface-section">
+                    {children}
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </Providers>
+      </body>
     </html>
   );
 }
